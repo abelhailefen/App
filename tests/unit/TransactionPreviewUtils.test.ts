@@ -29,6 +29,7 @@ const basicProps = {
             comment: '',
             attendees: [],
             created: '2024-01-01',
+            merchant: 'Test Merchant',
         },
     }),
     translate: jest.fn().mockImplementation((key: string) => key),
@@ -115,7 +116,7 @@ describe('TransactionPreviewUtils', () => {
         it('returns missing field message when appropriate', () => {
             const functionArgs = {
                 ...basicProps,
-                transaction: {...basicProps.transaction, created: '', amount: 100},
+                transaction: {...basicProps.transaction, created: '', amount: 100, merchant: ''},
                 originalTransaction: undefined,
                 shouldShowRBR: true,
             };
@@ -934,6 +935,8 @@ describe('TransactionPreviewUtils', () => {
 
             expect(getUniqueActionErrorsForTransaction(actions, undefined)).toEqual(['Error B', 'Error D']);
         });
+    });
+
     describe('transactionHasRBR', () => {
         it('should return false for a clean transaction with no violations', () => {
             expect(transactionHasRBR(basicProps.transaction, [])).toBe(false);
